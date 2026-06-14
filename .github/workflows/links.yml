@@ -3,13 +3,9 @@ name: Links
 on:
   repository_dispatch:
   workflow_dispatch:
-  schedule:
-  # Everyday at 9:00 AM.
-  - cron: "0 9 * * *"
-
 jobs:
   check-links:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
@@ -30,7 +26,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          args: --max-concurrency 1 --cache --max-cache-age 1d .
+        args: --max-concurrency 1 --cache --max-cache-age 1d .
 
     - name: Create Issue From File
       if: steps.lychee.outputs.exit_code != 0
